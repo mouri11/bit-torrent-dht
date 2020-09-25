@@ -20,7 +20,7 @@ class TorrentData(object):
         self.torrent_dict = parsed_data
         self.piece_length = self.torrent_dict['info']['piece length']
         self.pieces = self.torrent_dict['info']['pieces']
-        self.info_hash = hashlib.sha1(bencode.encode(self.torrent_dict['info'])).digest()
+        self.info_hash = hashlib.sha1(bencode.encode(self.torrent_dict['info'])).hexdigest()
         self.peer_id = self.generate_peer_id()
         self.announce_list = self.get_trackers()
         self.get_files()
@@ -78,7 +78,8 @@ class TorrentData(object):
         seed = str(time.time())
         return hashlib.sha1(seed.encode('utf-8')).digest()
 
-# tor = Torrent()
-# tor.load_file("./sintel.torrent")
-# print(tor.announce_list)
-# print(tor.file_names)
+tor = TorrentData()
+tor.load_file("./ubuntu-18.04.4-desktop-amd64.iso.torrent")
+print(tor.announce_list)
+print(tor.file_names)
+print(tor.info_hash)
